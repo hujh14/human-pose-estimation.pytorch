@@ -3,10 +3,10 @@ DATA_DIR: ''
 OUTPUT_DIR: 'output'
 LOG_DIR: 'log'
 WORKERS: 4
-PRINT_FREQ: 100
+PRINT_FREQ: 1
 
 DATASET:
-  DATASET: 'coco'
+  DATASET: 'virat'
   ROOT: 'data/virat/'
   TEST_SET: 'val'
   TRAIN_SET: 'train'

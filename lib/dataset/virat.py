@@ -67,14 +67,14 @@ class VIRATDataset(JointsDataset):
 
         # deal with class names
         cats = [cat['name'] for cat in self.coco.loadCats(self.coco.getCatIds())]
-        self.classes = ['__background__'] + cats
+        self.classes = cats
         logger.info('=> classes: {}'.format(self.classes))
         self.num_classes = len(self.classes)
         self._class_to_ind = dict(zip(self.classes, range(self.num_classes)))
         self._class_to_coco_ind = dict(zip(cats, self.coco.getCatIds()))
         self._coco_ind_to_class_ind = dict([(self._class_to_coco_ind[cls],
                                              self._class_to_ind[cls])
-                                            for cls in self.classes[1:]])
+                                            for cls in self.classes])
 
         # load image file names
         self.image_set_index = self._load_image_set_index()

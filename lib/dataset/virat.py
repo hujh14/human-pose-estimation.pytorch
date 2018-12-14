@@ -67,9 +67,7 @@ class VIRATDataset(JointsDataset):
 
         # deal with class names
         cats = [cat['name'] for cat in self.coco.loadCats(self.coco.getCatIds())]
-        self.classes = cats
-        if self.classes[0] != '__background__':
-            self.classes = ['__background__'] + self.classes
+        self.classes = ['__background__'] + cats
         logger.info('=> classes: {}'.format(self.classes))
         self.num_classes = len(self.classes)
         self._class_to_ind = dict(zip(self.classes, range(self.num_classes)))

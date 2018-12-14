@@ -161,8 +161,8 @@ class COCODataset(JointsDataset):
                 continue
 
             # ignore objs without keypoints annotation
-            if max(obj['keypoints']) == 0:
-                continue
+            # if max(obj['keypoints']) == 0:
+            #     continue
 
             joints_3d = np.zeros((self.num_joints, 3), dtype=np.float)
             joints_3d_vis = np.zeros((self.num_joints, 3), dtype=np.float)
@@ -213,16 +213,19 @@ class COCODataset(JointsDataset):
 
     def image_path_from_index(self, index):
         """ example: images / train2017 / 000000119993.jpg """
-        file_name = '%012d.jpg' % index
-        if '2014' in self.image_set:
-            file_name = 'COCO_%s_' % self.image_set + file_name
+        # file_name = '%012d.jpg' % index
+        # if '2014' in self.image_set:
+        #     file_name = 'COCO_%s_' % self.image_set + file_name
 
-        prefix = 'test2017' if 'test' in self.image_set else self.image_set
+        # prefix = 'test2017' if 'test' in self.image_set else self.image_set
 
-        data_name = prefix + '.zip@' if self.data_format == 'zip' else prefix
+        # data_name = prefix + '.zip@' if self.data_format == 'zip' else prefix
 
-        image_path = os.path.join(
-            self.root, 'images', data_name, file_name)
+        # image_path = os.path.join(
+        #     self.root, 'images', data_name, file_name)
+        image_path = os.path.join(self.root, 'images', self.coco.imgs[index]["file_name"])
+        if '2017' in self.image_set:
+            image_path = os.path.join(self.root, 'images', self.image_set, self.coco.imgs[index]["file_name"])
 
         return image_path
 
@@ -287,7 +290,7 @@ class COCODataset(JointsDataset):
                 'scale': all_boxes[idx][2:4],
                 'area': all_boxes[idx][4],
                 'score': all_boxes[idx][5],
-                'image': int(img_path[idx][-16:-4])
+                'image': int(img_path[idx][-10:-4])
             })
         # image x person x (keypoints)
         kpts = defaultdict(list)
